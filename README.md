@@ -4,9 +4,9 @@ Este es un Firewall escrito con iptables para un servidor Linux.
 ### Instalación rápida
 Edita los campos indicados en los archivos `iptables.sh` y `reglas.backup` respectivamente.
 
-* <TU INTERFAZ> sería algo como `eth0`, `ens33`, `enp0s3`...
-* <HOST MACHINE IP/MASK> se refiere a la dirección IP de, idealmente, el gateway. Suponiendo que este firewall está en un ámbito virtualizado. La máscara se pone en notación con barra, ej. `/24`.
-* <FIREWALL IP/MASK> es la IP del servidor donde se está instalando el firewall.
+* "TU INTERFAZ" sería algo como `eth0`, `ens33`, `enp0s3`...
+* "HOST MACHINE IP/MASK" se refiere a la dirección IP de, idealmente, el gateway. Suponiendo que este firewall está en un ámbito virtualizado. La máscara se pone en notación con barra, ej. `/24`.
+* "FIREWALL IP/MASK" es la IP del servidor donde se está instalando el firewall.
 * NOTA: si estás usando una distro que no sea Debian based, edita también la sección de instalación de dependencias para usar el gestor de paquetes de tu distro.
 
 Hecho esto, dale permisos de ejecución al script y ejecuta `bash iptables.sh` y se instalará automáticamente. Puedes ver las reglas del firewall con el comando `iptables -L -n -v`
@@ -90,3 +90,14 @@ Por brevedad no se explicará qué es un firewall con estados. En pocas palabras
 Hay que asegurar que las VLANs, el direccionamiento y el enrutamiento no se pierdan al reiniciar el servidor, para ello tenemos que modificar la configuración en nuestro archivo `/etc/netplan/xyz.yaml`, en este directorio hay un ejemplo de archivo que puedes colocar en tu configuración para que no se pierda la configuración de red al reiniciar.
 
 Si usaste mi configuración, haz: `chmod 600 /etc/netplan/50-cloud-init.yaml` y luego `netplan apply` (verifica que el proceso `systemd-networkd` está activo y corriendo.
+
+# Registar los paquetes negados
+Es común llevar un ".log" que lleve registro de los paquetes negados para que luego el SIEM de nuestro SOC utilice estos datos y los presente visualmente a los analistas. Esto lo podemos hacer como:
+
+`touch /var/log/iptables.log`
+
+`chmod 640 /var/log/iptables.log`
+
+`chown syslog:adm /var/log/iptables.log `
+
+Y con `nano /etc/rsyslog.conf` agregamos la línea de texto `kern.* /var/log/iptables.log`. Los paquetes negados estarán en el archivo mencionado, se pueden ver con `tail -f /var/log/iptables.log`.
