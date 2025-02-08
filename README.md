@@ -18,6 +18,11 @@ Para hacer que todos los cambios sean permanentes, hay que editar la configuraci
 ## Stateless firewall
 Haremos primero la configuración inicial de un firewall stateless para luego construir sobre él una estructura más compleja.
 
+Dependencias:
 `sudo su
 apt update
 apt install nano openssh-server iptables iputils-ping net-tools vlan apache2 rsyslog nmap fail2ban`
+
+Habilitamos el protocolo dot1Q para el encapsulamiento de paquetes debido a las VLAN:
+`sudo modprobe 8021q
+echo "8021q" | sudo tee -a /etc/modules`
