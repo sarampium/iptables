@@ -30,11 +30,19 @@ echo "8021q" | sudo tee -a /etc/modules`
 Se puede verificar si se activó el protocolo mediante `lsmod | grep 8021q`, debería salir un mensaje diciendo 8021q. Si no aparece, no importa, igualmente más adelante se verificará la comunicación entre VLANs.
 
 Creemos las VLANs:
+
 `ip link add link ens33 name LAN type vlan id 10`
+
 `ip link add link ens33 name WAN type vlan id 20`
+
 `ip link add link ens33 name DMZ type vlan id 30`
 
 `ip addr add 10.10.10.1/24 dev LAN`
+
 `ip addr add 10.10.20.1/24 dev WAN`
+
 `ip addr add 10.10.30.1/24 dev DMZ`
+
 `ip route add default via 192.168.29.2 dev ens33`
+
+a
