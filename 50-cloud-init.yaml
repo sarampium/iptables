@@ -1,0 +1,27 @@
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    <TU INTERFAZ>:
+      dhcp4: no
+      addresses:
+        - <IP DE FIREWALL/MASK>
+
+  vlans:
+    LAN:
+      id: 10
+      link: <TU INTERFAZ>
+      addresses:
+        - 10.10.10.1/24
+  vlans:
+    WAN:
+      id: 20
+      link: <TU INTERFAZ>
+      addresses:
+        - 10.10.20.1/24
+  vlans:
+    DMZ:
+      id: 30
+      link: <TU INTERFAZ>
+      addresses:
+        - 10.10.30.1/24
