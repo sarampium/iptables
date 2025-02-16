@@ -1,5 +1,5 @@
 # Firewall iptables
-Este es un Firewall escrito con iptables para un servidor Linux.
+Este es un Firewall escrito con iptables para un servidor Ubuntu.
 
 ### Instalación rápida
 Edita los campos indicados en los archivos `iptables.sh` y `reglas.backup` respectivamente.
